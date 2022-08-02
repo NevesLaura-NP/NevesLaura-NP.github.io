@@ -1,0 +1,31 @@
+html, 
+header
+li {
+  display: inline;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+body {
+  background-size: cover;
+  background-position: center;
+  background: url(http://1.bp.blogspot.com/-HEi6s7Hm-00/UOA2voHmm3I/AAAAAAAAGW0/DNKRyB_6tp8/s1600/True+Blue+Tumblr+Backgrounds+blue+tint.jpg);
+  height: 100%;
+  width: 100%;
+}
+a {
+  text-decoration-line: none;
+  color: #8e7a99;
+}
+@media screen and (max-width: 500px) {
+  body {
+    background: url(https://68.media.tumblr.com/0ade9a955b6dd9b79896e0cca05430c2/tumblr_mz7a23Xhaz1ra8ixno1_500.jpg)
+  }
+  a{
+    color: black;
+  }
+}
