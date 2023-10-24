@@ -28,9 +28,9 @@
         <nav class="navbar navbar-expand-lg navbar-light">   
             <ul class="nav nav-actions d-lg-none ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#!" data-toggle="searchModal">
+                    <!--<a class="nav-link" href="#!" data-toggle="searchModal">
                         <img src="assets/images/search.svg" alt="search">
-                    </a>
+                    </a>-->
                 </li>
                 <li class="nav-item dropdown d-none d-sm-block">
                     <a class="nav-link dropdown-toggle" href="#!" id="languageDropdown" data-toggle="dropdown"
@@ -187,24 +187,7 @@
                            <p class="client-section-subtitle">This project was a final assignment required for the completion of the 2022 cohort Intro to Agtech. The website documents my process to develop my current hydroponic system. The website was built using Javascript, HTML/CSS, Bootstrap and API integration.  </p>
                           </div>
                 </div>
-            </article>
-           <article class="project">
-                <div class="row">
-                    <div class="col-md-4 mb-5 md-mb-0 project-content wow fadeInLeft">
-                        <h2 class="project-title">Tech F.I.N/Hispanic Star</h2>
-                        <a href="https://www.instagram.com/p/CgSiEAcrI9F/" class="project-link">view project</a>
-                    </div>
-                    <div class="col-md-7 mb-5">
-                        <div class="project-thumbnail-wrapper wow fadeInRight">
-                            <img src="fintech.png" alt="project">
-                        </div>
-                    </div>
-                  <div>
-                    <p class="client-section-subtitle">This project was a cooperation between Nino de la Caridad, Tech F.I.N, and Hispanic Star to aid in the Digital Divide in the Bronx. I took part as a coordinator and as well as social media management assistant. As an outcome of my work in approximately 30 days, there was a 14.2% increase in their social media following.</p>
-                          </div>
-                </div>
-            </article>
-          
+            </article>     
           
         </div>
     </main>
@@ -215,10 +198,6 @@
                 <div class="row">
                     <div class="col-md-6">
                         <nav class="footer-social-links">
-                            <a href="#!">Fb</a>
-                            <a href="#!">Tw</a>
-                            <a href="#!">In</a>
-                            <a href="#!">Be</a>
                         </nav>
                     </div>
                     <div class="col-md-6">
@@ -275,6 +254,12 @@
             <input type="search" class="oleez-overlay-search-input" id="search" name="search" placeholder="Search here">
         </form>
     </div>
+    <script type="text/javascript">
+        document.getElementById('frmSearch').onsubmit = function() {
+            window.location = 'http://www.google.com/search?q=site:https://neveslaura-np.github.io/ ' + document.getElementById('txtSearch').value;
+            return false;
+        }
+    </script>
     <script src="assets/vendors/popper.js/popper.min.js"></script>
     <script src="assets/vendors/wowjs/wow.min.js"></script>
     <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
