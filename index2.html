@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laura Neves Penido — Data Scientist</title>
+<meta name="description" content="Data science portfolio of Laura Neves Penido — machine learning, exploratory data analysis, and data visualization projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B141F;
+    --panel:#111D2C;
+    --panel-2:#0E1826;
+    --line: rgba(237,234,226,0.10);
+    --line-strong: rgba(237,234,226,0.18);
+    --paper:#EDEAE2;
+    --muted:#8493A8;
+    --teal:#5FD9C4;
+    --ember:#FF5A36;
+    --ember-dim: rgba(255,90,54,0.14);
+    --teal-dim: rgba(95,217,196,0.12);
+    --maxw: 1120px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  /* background grid texture */
+  .bg-grid{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 70%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 70%);
+    opacity:0.5;
+  }
+
+  /* ============ NAV ============ */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(11,20,31,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:72px;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:1.05rem;
+    letter-spacing:0.02em;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .logo .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--ember);
+    box-shadow:0 0 0 4px var(--ember-dim);
+  }
+  .nav-links{
+    display:flex;
+    gap:36px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem;
+  }
+  .nav-links a{
+    color:var(--muted);
+    transition:color 0.2s ease;
+    position:relative;
+    padding:4px 0;
+  }
+  .nav-links a:hover{color:var(--paper);}
+  .nav-links a::before{
+    content:"";
+    position:absolute;
+    left:0; bottom:-2px;
+    width:0; height:1px;
+    background:var(--teal);
+    transition:width 0.25s ease;
+  }
+  .nav-links a:hover::before{width:100%;}
+
+  .menu-btn{
+    display:none;
+    background:none;
+    border:1px solid var(--line-strong);
+    border-radius:6px;
+    width:40px; height:40px;
+    color:var(--paper);
+    font-size:1.1rem;
+    cursor:pointer;
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    z-index:1;
+    padding:96px 0 72px;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap:48px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:var(--teal);
+    background:var(--teal-dim);
+    border:1px solid rgba(95,217,196,0.25);
+    padding:6px 12px;
+    border-radius:100px;
+    margin-bottom:22px;
+  }
+  .eyebrow .blink{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--teal);
+    animation: blink 1.6s ease-in-out infinite;
+  }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.25;} }
+
+  .hero h1{
+    font-size:clamp(2.4rem, 5.2vw, 3.9rem);
+    line-height:1.05;
+    margin-bottom:18px;
+  }
+  .hero h1 .accent{color:var(--ember);}
+
+  .hero p.lead{
+    font-size:1.08rem;
+    color:var(--muted);
+    max-width:52ch;
+    margin-bottom:34px;
+  }
+  .hero p.lead strong{color:var(--paper); font-weight:600;}
+
+  .cta-row{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    padding:13px 22px;
+    border-radius:6px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition: all 0.2s ease;
+    border:1px solid transparent;
+  }
+  .btn-primary{
+    background:var(--ember);
+    color:#0B141F;
+    font-weight:600;
+  }
+  .btn-primary:hover{ background:#ff764f; transform:translateY(-1px); }
+  .btn-ghost{
+    border-color:var(--line-strong);
+    color:var(--paper);
+  }
+  .btn-ghost:hover{ border-color:var(--teal); color:var(--teal); }
+
+  /* hero chart */
+  .chart-panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:20px 20px 12px;
+    position:relative;
+  }
+  .chart-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--muted);
+    margin-bottom:12px;
+  }
+  .chart-head .filename{color:var(--paper);}
+  svg.plot{width:100%; height:auto; display:block;}
+  .plot-dot{
+    opacity:0;
+    animation: pop 0.4s ease forwards;
+  }
+  @keyframes pop{ to{opacity:1;} }
+  .plot-line{
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: draw 1.6s 0.9s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  @keyframes draw{ to{stroke-dashoffset:0;} }
+  .chart-caption{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;
+    color:var(--muted);
+    padding:10px 2px 4px;
+    border-top:1px solid var(--line);
+    margin-top:10px;
+  }
+
+  /* ============ SECTION SHELL ============ */
+  section{
+    position:relative;
+    z-index:1;
+    padding:88px 0;
+    border-top:1px solid var(--line);
+  }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    margin-bottom:48px;
+    flex-wrap:wrap;
+  }
+  .section-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:var(--ember);
+    margin-bottom:10px;
+    display:block;
+  }
+  .section-head h2{
+    font-size:clamp(1.6rem, 3vw, 2.2rem);
+  }
+  .section-sub{
+    color:var(--muted);
+    max-width:44ch;
+    font-size:0.95rem;
+  }
+
+  /* ============ SKILLS ============ */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .skill-col{
+    background:var(--panel-2);
+    padding:28px 26px;
+  }
+  .skill-col h3{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    font-weight:500;
+    color:var(--teal);
+    margin-bottom:18px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .skill-col ul li{
+    font-size:0.95rem;
+    color:var(--paper);
+    padding:9px 0;
+    border-top:1px dashed var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .skill-col ul li:first-child{border-top:none;}
+  .skill-col ul li span.lvl{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.68rem;
+    color:var(--muted);
+  }
+
+  /* ============ PROJECTS ============ */
+  .projects{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+  }
+  .project-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:36px;
+    display:grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap:36px;
+    transition:border-color 0.25s ease;
+  }
+  .project-card:hover{ border-color: var(--line-strong); }
+  .project-file{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem;
+    color:var(--ember);
+    display:inline-block;
+    background:var(--ember-dim);
+    padding:5px 10px;
+    border-radius:5px;
+    margin-bottom:16px;
+    width:fit-content;
+  }
+  .project-card h3{
+    font-size:1.4rem;
+    margin-bottom:14px;
+  }
+  .project-left{
+    display:flex;
+    flex-direction:column;
+  }
+  .project-goal{
+    font-size:0.88rem;
+    color:var(--muted);
+    margin-bottom:20px;
+  }
+  .stack{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:auto;
+    margin-bottom:20px;
+  }
+  .stack span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;
+    color:var(--teal);
+    border:1px solid rgba(95,217,196,0.25);
+    padding:4px 9px;
+    border-radius:100px;
+  }
+  .project-link{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem;
+    color:var(--paper);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    width:fit-content;
+    border-bottom:1px solid var(--line-strong);
+    padding-bottom:3px;
+    transition:color 0.2s ease, border-color 0.2s ease;
+  }
+  .project-link:hover{ color:var(--teal); border-color:var(--teal); }
+  .project-body p{
+    color:var(--muted);
+    font-size:0.95rem;
+    margin-bottom:14px;
+  }
+  .project-body p strong{color:var(--paper); font-weight:500;}
+
+  /* ============ TESTIMONIAL ============ */
+  .testimonial{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:48px;
+    position:relative;
+  }
+  .testimonial .mark{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:3.5rem;
+    color:var(--ember);
+    line-height:1;
+    margin-bottom:12px;
+    display:block;
+  }
+  .testimonial blockquote{
+    font-size:1.2rem;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:400;
+    line-height:1.5;
+    color:var(--paper);
+    max-width:62ch;
+    margin-bottom:26px;
+  }
+  .testimonial cite{
+    font-style:normal;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .testimonial cite .name{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.88rem;
+    color:var(--teal);
+  }
+  .testimonial cite .role{
+    font-size:0.85rem;
+    color:var(--muted);
+  }
+
+  /* ============ FOOTER / CONTACT ============ */
+  footer{
+    padding:80px 0 40px;
+    position:relative;
+    z-index:1;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap:40px;
+    padding-bottom:48px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:28px;
+  }
+  footer h2{
+    font-size:clamp(1.8rem, 4vw, 2.6rem);
+    margin-bottom:16px;
+  }
+  footer .lead{
+    color:var(--muted);
+    max-width:42ch;
+    margin-bottom:26px;
+  }
+  .contact-info{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    justify-content:center;
+  }
+  .contact-row{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    padding-bottom:14px;
+    border-bottom:1px dashed var(--line);
+  }
+  .contact-row .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .contact-row .value{
+    font-size:1rem;
+  }
+  .contact-row a.value:hover{color:var(--teal);}
+
+  .bottom-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:var(--muted);
+  }
+  .socials{
+    display:flex;
+    gap:20px;
+  }
+  .socials a{ color:var(--muted); transition:color 0.2s ease; }
+  .socials a:hover{ color:var(--ember); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .skills-grid{ grid-template-columns:1fr; }
+    .project-card{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr; }
+    .nav-links{
+      position:absolute;
+      top:72px; left:0; right:0;
+      background:var(--ink);
+      border-bottom:1px solid var(--line);
+      flex-direction:column;
+      gap:0;
+      display:none;
+      padding:8px 32px 20px;
+    }
+    .nav-links.open{ display:flex; }
+    .nav-links a{ padding:14px 0; border-top:1px solid var(--line); }
+    .nav-links a:first-child{ border-top:none; }
+    .menu-btn{ display:block; }
+  }
+  @media (max-width:520px){
+    .wrap{padding:0 20px;}
+    .testimonial{padding:30px;}
+    .project-card{padding:26px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="logo"><span class="dot"></span>LNP</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#work">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" style="border-top:none; padding-top:96px;">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow"><span class="blink"></span> currently: Data Science Fellow, The Knowledge House</span>
+        <h1>Laura Neves<br><span class="accent">Penido.</span></h1>
+        <p class="lead">
+          I turn messy, real-world datasets into <strong>tested models and clear visual stories</strong> —
+          from forecasting wildfire damage with regression analysis to uncovering behavioral
+          patterns in retail data. Python, SQL, and a healthy skepticism of the first model that works.
+        </p>
+        <div class="cta-row">
+          <a href="#work" class="btn btn-primary">View Projects →</a>
+          <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        </div>
+      </div>
+
+      <div class="chart-panel">
+        <div class="chart-head">
+          <span class="filename">forest_fires.csv</span>
+          <span>model: linear_regression</span>
+        </div>
+        <svg class="plot" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+          <!-- axes -->
+          <line x1="30" y1="10" x2="30" y2="200" stroke="var(--line-strong)" stroke-width="1"/>
+          <line x1="30" y1="200" x2="390" y2="200" stroke="var(--line-strong)" stroke-width="1"/>
+          <!-- scatter points -->
+          <circle class="plot-dot" cx="55" cy="170" r="4" fill="#5FD9C4" style="animation-delay:.1s"/>
+          <circle class="plot-dot" cx="80" cy="150" r="4" fill="#5FD9C4" style="animation-delay:.18s"/>
+          <circle class="plot-dot" cx="95" cy="175" r="4" fill="#5FD9C4" style="animation-delay:.24s"/>
+          <circle class="plot-dot" cx="120" cy="130" r="4" fill="#5FD9C4" style="animation-delay:.3s"/>
+          <circle class="plot-dot" cx="140" cy="155" r="4" fill="#5FD9C4" style="animation-delay:.36s"/>
+          <circle class="plot-dot" cx="160" cy="110" r="4" fill="#5FD9C4" style="animation-delay:.42s"/>
+          <circle class="plot-dot" cx="185" cy="128" r="4" fill="#5FD9C4" style="animation-delay:.48s"/>
+          <circle class="plot-dot" cx="205" cy="95" r="4"  fill="#5FD9C4" style="animation-delay:.54s"/>
+          <circle class="plot-dot" cx="225" cy="115" r="4" fill="#5FD9C4" style="animation-delay:.6s"/>
+          <circle class="plot-dot" cx="250" cy="80" r="4"  fill="#5FD9C4" style="animation-delay:.66s"/>
+          <circle class="plot-dot" cx="270" cy="98" r="4"  fill="#5FD9C4" style="animation-delay:.72s"/>
+          <circle class="plot-dot" cx="295" cy="65" r="4"  fill="#5FD9C4" style="animation-delay:.78s"/>
+          <circle class="plot-dot" cx="315" cy="82" r="4"  fill="#5FD9C4" style="animation-delay:.84s"/>
+          <circle class="plot-dot" cx="340" cy="50" r="4"  fill="#5FD9C4" style="animation-delay:.9s"/>
+          <circle class="plot-dot" cx="360" cy="60" r="4"  fill="#5FD9C4" style="animation-delay:.96s"/>
+          <!-- regression line -->
+          <line class="plot-line" x1="45" y1="182" x2="375" y2="45" stroke="#FF5A36" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div class="chart-caption">y = burned_area&nbsp;&nbsp;·&nbsp;&nbsp;x = temperature index&nbsp;&nbsp;·&nbsp;&nbsp;R² under review</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="section-tag">// stack</span>
+          <h2>Tools I reach for</h2>
+        </div>
+        <p class="section-sub">The languages, libraries, and workflows behind every project below.</p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-col">
+          <h3>Languages</h3>
+          <ul>
+            <li>Python <span class="lvl">pandas · numpy</span></li>
+            <li>SQL <span class="lvl">querying · joins</span></li>
+            <li>HTML5 / CSS <span class="lvl">core</span></li>
+            <li>JavaScript <span class="lvl">core</span></li>
+          </ul>
+        </div>
+        <div class="skill-col">
+          <h3>Analysis &amp; Modeling</h3>
+          <ul>
+            <li>Machine Learning <span class="lvl">scikit-learn</span></li>
+            <li>Data Analytics <span class="lvl">EDA</span></li>
+            <li>Data Visualization <span class="lvl">matplotlib · seaborn</span></li>
+            <li>Data Wrangling <span class="lvl">cleaning</span></li>
+          </ul>
+        </div>
+        <div class="skill-col">
+          <h3>Workflow</h3>
+          <ul>
+            <li>Github <span class="lvl">version control</span></li>
+            <li>Trello <span class="lvl">project tracking</span></li>
+            <li>G Suite <span class="lvl">collaboration</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="section-tag">// case studies</span>
+          <h2>Selected projects</h2>
+        </div>
+        <p class="section-sub">Two datasets, two questions — worked end to end from raw data to conclusion.</p>
+      </div>
+
+      <div class="projects">
+
+        <article class="project-card">
+          <div class="project-left">
+            <span class="project-file">forest_fires.csv</span>
+            <h3>Modeling the Area Burned by Forest Fires</h3>
+            <p class="project-goal">Forecasting wildfire damage in Portugal's northern region using linear regression.</p>
+            <div class="stack">
+              <span>Python</span><span>scikit-learn</span><span>Matplotlib</span><span>NumPy</span><span>Seaborn</span>
+            </div>
+            <a class="project-link" href="https://github.com/NevesLaura-NP/forest-fires" target="_blank" rel="noopener">View repository →</a>
+          </div>
+          <div class="project-body">
+            <p>The objective was to <strong>forecast the area burned by forest fires</strong> using historical environmental data, applying linear regression as the core predictive model.</p>
+            <p>The dataset went through preprocessing, data wrangling, and exploratory analysis to surface variables with strong correlation to the target and filter out major outliers.</p>
+            <p>The more interesting result wasn't the prediction itself: <strong>testing cast real doubt on linear regression as a reliable model</strong> for this kind of environmental data — even though the dataset's original authors had built their own linear model on it. The writeup digs into why.</p>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-left">
+            <span class="project-file">shopping_behavior.csv</span>
+            <h3>Shopping Behaviour Analysis</h3>
+            <p class="project-goal">Exploratory analysis of purchase patterns in the American retail market.</p>
+            <div class="stack">
+              <span>Python</span><span>pandas</span><span>EDA</span><span>Data Cleaning</span>
+            </div>
+            <a class="project-link" href="https://github.com/NevesLaura-NP/shopping-data-TLAB/tree/main" target="_blank" rel="noopener">View repository →</a>
+          </div>
+          <div class="project-body">
+            <p>A shopping behavior analysis built on a sample of American retail market data.</p>
+            <p>Through exploratory data analysis and data cleaning, the project surfaces patterns across <strong>age, season, and common purchase modality</strong> — comparing variable means to find where customer behavior clusters.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT / TESTIMONIAL ============ -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="section-tag">// from a collaborator</span>
+          <h2>What it's like to work together</h2>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <span class="mark">"</span>
+        <blockquote>
+          Laura is a results-oriented team member focused on delivering on her clients' needs.
+          Her dedication shows in her willingness to learn new skills, adopt new tools, and
+          implement solutions that bring a project's vision to life. She's a great communicator
+          and team player who will be an asset to any project she works on.
+        </blockquote>
+        <cite>
+          <span class="name">Samia Lemfadli</span>
+          <span class="role">CEO &amp; Founder, Change Food for Good</span>
+        </cite>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <span class="section-tag">// get in touch</span>
+        <h2>Let's work with data together.</h2>
+        <p class="lead">Open to data science roles, collaborations, and projects that need someone comfortable turning ambiguous questions into tested answers.</p>
+        <a href="mailto:neveslaura1997@gmail.com" class="btn btn-primary">Email Me →</a>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row">
+          <span class="label">Inquiries</span>
+          <a class="value" href="mailto:neveslaura1997@gmail.com">neveslaura1997@gmail.com</a>
+        </div>
+        <div class="contact-row">
+          <span class="label">Location</span>
+          <span class="value">New York, USA</span>
+        </div>
+        <div class="contact-row">
+          <span class="label">Currently</span>
+          <span class="value">Data Science Fellow, The Knowledge House</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <span>© 2026 Laura Neves Penido</span>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/laura-neves-penido-5a192a135/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/NevesLaura-NP" target="_blank" rel="noopener">Github</a>
+        <a href="mailto:neveslaura1997@gmail.com">Email</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
